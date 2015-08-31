@@ -1,0 +1,8 @@
+## Interface: 60000
+## Title: Roll DKP
+## Notes: Roll DKP * 5 ~ DKP *10
+## Author: Zeicold
+## Version: 2014.12.19
+## SavedVariables: current_dkp_master, rolldkp_version
+
+RollDKP.lua
