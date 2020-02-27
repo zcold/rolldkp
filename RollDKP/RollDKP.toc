@@ -1,7 +1,7 @@
-## Interface: 60200
+## Interface: 11303
 ## Title: Roll DKP
-## Notes: /rolldkp dkpmaster X-Y to roll DKP * X to DKP * Y.
+## Notes: /rolldkp <dkpmaster> X-Y to roll DKP * X to DKP * Y.
 ## Author: Zeicold
-## Version: 2015.12.06
+## Version: 2020.02.27
 
 RollDKP.lua
