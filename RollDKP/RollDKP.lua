@@ -1,4 +1,5 @@
 roll_dkp = false
+dkp_whisper = 'mydkp'
 
 -- register event for receive DKP from DKP master
   local rolldkp_frame = CreateFrame('Frame')
@@ -10,10 +11,18 @@ roll_dkp = false
       if roll_dkp then
         local wmessage = ...
         if string.find(wmessage, 'WebDKP') then
-          if string.find(wmessage, 'Current DKP') then
+          if string.find(wmessage, 'current DKP') then
             my_current_DKP = string.match(wmessage, '%d+')
-            RandomRoll(tonumber(my_current_DKP) * rolldkp_scale_factor_min,
-                       tonumber(my_current_DKP) * rolldkp_scale_factor_max)
+            if string.find(wmessage, '-') then
+              print('I will not roll cuz my DKP is negative (-' .. my_current_DKP .. ').')
+            else
+              if (tonumber(my_current_DKP) == 0) then
+                print('I will not roll cuz my DKP is 0.')
+              else
+                RandomRoll(tonumber(my_current_DKP) * rolldkp_scale_factor_min,
+                           tonumber(my_current_DKP) * rolldkp_scale_factor_max)
+              end
+            end
           end
         else
           print('Cannot get my current DKP from DKP master.')
@@ -31,7 +40,7 @@ roll_dkp = false
     if min then
       rolldkp_scale_factor_min = tonumber(min)
     else
-      rolldkp_scale_factor_min = 7
+      rolldkp_scale_factor_min = 5
     end
 
     -- set max
@@ -41,19 +50,17 @@ roll_dkp = false
       rolldkp_scale_factor_max = 10
     end
 
-    print('I will roll DKP * ' .. rolldkp_scale_factor_min .. ' to DKP * ' .. rolldkp_scale_factor_max .. '.')
-
     -- whisper dkp master
     if dkp_master then
       local whisper_target = Ambiguate(dkp_master, 'all')
       if whisper_target then
         roll_dkp = true
-        SendChatMessage('!dkp', 'WHISPER', nil, whisper_target)
+        SendChatMessage(dkp_whisper, 'WHISPER', nil, whisper_target)
       else
         print('Cannot find DKP master: ' .. dkp_master .. '.')
       end
     else
-      print('DKP master is not provided. Example: /rolldkp dkpmaster 7-10')
+      print('DKP master is not provided. Example: /rolldkp dkpmaster 5-10')
     end
   end
 
